@@ -1,5 +1,7 @@
+import { taskDetail } from './taskDetail.ts';
 import { viewTask } from '../prompt/getMenu.ts';
 import type { Task } from './taskType.ts';
+import { searchTask } from '../menus/search.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
@@ -13,7 +15,7 @@ export function mainMenu() {
     console.log("[0] Salir\n");
 }
 
-export function makeMenu(task: Task, estados: number, dificultades: number, nueva: boolean) {
+export function makeMenu(task: Task, estados: Map<number, string>, dificultades: Map<number, string>, nueva: boolean) {
     if (nueva == true) {
         console.log("Estas creando una nueva tarea!");
     }

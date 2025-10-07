@@ -1,5 +1,5 @@
 import { warningText } from '../text/warning.ts';
-import { format, parse, getMilliseconds} from 'date-fns';
+import { format, parse } from 'date-fns';
 import { dateCheck } from '../menus/check.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);

@@ -8,6 +8,7 @@ const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
+// <>
 function main() {
     let menu: number = 0;
     let loop: boolean = true;

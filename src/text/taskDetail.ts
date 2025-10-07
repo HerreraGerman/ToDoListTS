@@ -1,5 +1,6 @@
 import { estados, dificultades } from '../task/maps.ts';
 import type { Task } from './taskType.ts';
+import { taskMake } from '../menus/taskMake.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
