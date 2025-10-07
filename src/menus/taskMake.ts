@@ -11,7 +11,7 @@ const prompt = require('prompt-sync')();
 
 export function taskMake(editTask: any) {
     let loop: boolean = true;
-    let check: any = true;
+    let check: string | boolean = true;
     let menu: number  = 0;
     let newTask: any = null;
     let newFlag: boolean;

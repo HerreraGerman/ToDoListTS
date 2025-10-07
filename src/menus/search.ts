@@ -1,33 +1,32 @@
-import { viewTask } from '../prompt/getMenu.ts';
+import type { Task } from '../text/taskType.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function searchTask(taskList: any, busqueda: string) {
-    let foundCount: number = 0;
-    let foundList: string[] = [];
-    for (let i: number = 0; i < taskList.length; i++) {
-        if (taskList[i].titulo.toLowerCase().includes(busqueda.toLowerCase())) {
-            foundCount++;
-            foundList[foundCount] = taskList[i];
-            console.log("[" + foundCount + "]" + taskList[i].titulo);
+export function searchTask(taskList: Task[], busqueda: string): Task | false {
+    const foundList: Task[] = [];
+
+    for (const task of taskList) {
+        if (task.titulo.toLowerCase().includes(busqueda.toLowerCase())) {
+            foundList.push(task);
+            console.log("[" + foundList.length + "]" + task.titulo);
         }
-        return chooseEdit(foundList, foundCount);
     }
+    return chooseEdit(foundList);
 }
 
-export function chooseEdit(foundList: any, foundCount: any) {
-    if (foundCount != 0) {
-        console.log("\n¿Deseas ver los detalles de alguna tarea?");
-        console.log("Introduce el numero para ver una tarea o 0 para volver.");
-        let i: number = prompt();
-        if (isNaN(i) || i == 0 || foundList[Math.floor(i).title == undefined]) {
+export function chooseEdit(foundList: Task[]): Task | false {
+    if (foundList.length = 0) {
+        return false;
+    }
+
+    console.log("\n¿Deseas ver los detalles de alguna tarea?");
+    console.log("Introduce el numero para ver una tarea o 0 para volver.\n");
+    let i: number = prompt();
+    if (isNaN(i) || i === 0 || i > foundList.length) {
             console.clear();
             return false;
         }
-        else {
-            return foundList[Math.floor(i)];
-        }
-    }
+    return foundList[i - 1] ?? false;
 }

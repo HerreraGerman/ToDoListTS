@@ -11,7 +11,7 @@ const prompt = require('prompt-sync')();
 function main() {
     let menu: number = 0;
     let loop: boolean = true;
-    let newTask: any = null;
+    let newTask: string | null = null;
     const taskList: string[] = [];
 
     // Pregunta nombre de usuario
@@ -23,6 +23,7 @@ function main() {
 
     // Muestra menu - Loop principal
     do {
+        console.clear();
         console.log(`¡Hola, ${username}!\n`);
         mainMenu();
         menu = Number(prompt());

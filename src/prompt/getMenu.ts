@@ -1,13 +1,15 @@
 import { warningText } from '../text/warning.ts';
 import { chooseEdit } from '../menus/search.ts';
+import type { Task } from '../text/taskType.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function viewTask(taskList: any) {
+// <>
+export function viewTask(taskList: Task[]): void | ReturnType<typeof chooseEdit>{
     let foundCount: number = 0;
-    let foundList: string[] = [];
+    let foundList: Task[] = [];
     let filter: number = Number(prompt());
     let filterType: string = "";
     console.clear();
@@ -31,12 +33,12 @@ export function viewTask(taskList: any) {
             return;
     }
     console.log("Estas son las tareas relacionadas" + filterType + ": \n");
-    for (let i: number = 0; i < taskList.length; i++) {
-        if (taskList[i].status == filter - 1 || filter == 1) {
-            console.log("[" + (i + 1) + "] " + taskList[i].titulo);
-            foundCount++;
-            foundList[foundCount] = taskList[i];
+
+    for (const task of taskList) {
+        if (task.status == filter - 1 || filter == 1) {
+            console.log(`[${foundList.length + 1}] ${task.titulo}`);
+            foundList.push(task);
         }
     }
-    return chooseEdit(foundList, foundCount);
+    return chooseEdit(foundList);
 }

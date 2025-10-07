@@ -1,4 +1,9 @@
 import { viewTask } from '../prompt/getMenu.ts';
+import type { Task } from './taskType.ts';
+import { createRequire } from 'module';
+const require = createRequire(import.meta.url);
+
+const prompt = require('prompt-sync')();
 
 export function mainMenu() {
     console.log("¿Que desea hacer?");
@@ -8,7 +13,7 @@ export function mainMenu() {
     console.log("[0] Salir\n");
 }
 
-export function makeMenu(task: any, estados: any, dificultades: any, nueva: any) {
+export function makeMenu(task: Task, estados: number, dificultades: number, nueva: boolean) {
     if (nueva == true) {
         console.log("Estas creando una nueva tarea!");
     }
@@ -26,14 +31,15 @@ export function makeMenu(task: any, estados: any, dificultades: any, nueva: any)
     console.log("[-1] Cancelar Tarea");
 }
 
-export function searchMenu(taskList: string[]) {
+export function searchMenu(taskList: Task[]) {
     console.clear();
-    let busqueda: void = console.log("Introduce el titulo de una tarea para buscarla: ");
-    busqueda.splice(0, 100);
+    let busqueda: string = '';
+    console.log("Introduce el titulo de una tarea para buscarla: ")
+    busqueda = prompt();
     taskDetail(searchTask(taskList, busqueda));
 }
 
-export function viewMenu(taskList: string[]) {
+export function viewMenu(taskList: Task[]) {
     console.clear();
     if (taskList.length == 0) {
         console.log("Tu lista de tareas se encuentra vacia!");
