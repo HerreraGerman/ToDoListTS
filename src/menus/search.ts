@@ -4,29 +4,35 @@ const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function searchTask(taskList: Task[], busqueda: string): Task | false {
+export function searchTask(taskList: Task[], busqueda: string): Task | null {
     const foundList: Task[] = [];
+    const termino = busqueda.toLocaleLowerCase();
 
     for (const task of taskList) {
-        if (task.titulo.toLowerCase().includes(busqueda.toLowerCase())) {
+        const titulo = task.titulo.toLowerCase();
+        const descripcion = task.descripcion.toLowerCase();
+        if (titulo.includes(termino) || descripcion.includes(termino)) {
             foundList.push(task);
-            console.log("[" + foundList.length + "]" + task.titulo);
+            console.log(`[${foundList.length}] ${task.titulo} - ${task.descripcion}`);
         }
     }
     return chooseEdit(foundList);
 }
 
-export function chooseEdit(foundList: Task[]): Task | false {
-    if (foundList.length = 0) {
-        return false;
+export function chooseEdit(foundList: Task[]): Task | null {
+    if (foundList.length === 0) {
+        console.log("No se encontraron coincidencias!");
+        return null;
     }
 
     console.log("\n¿Deseas ver los detalles de alguna tarea?");
     console.log("Introduce el numero para ver una tarea o 0 para volver.\n");
-    let i: number = prompt();
+
+    const input = prompt();
+    const i: number = Number(input);
     if (isNaN(i) || i === 0 || i > foundList.length) {
             console.clear();
-            return false;
+            return null;
         }
-    return foundList[i - 1] ?? false;
+    return foundList[i - 1] ?? null;
 }

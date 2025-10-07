@@ -37,7 +37,7 @@ export function searchMenu(taskList: Task[]) {
     console.clear();
     let busqueda: string = '';
     console.log("Introduce el titulo de una tarea para buscarla: ")
-    busqueda = prompt();
+    busqueda = prompt() || '';
     taskDetail(searchTask(taskList, busqueda));
 }
 

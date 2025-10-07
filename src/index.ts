@@ -24,7 +24,6 @@ function main() {
 
     // Muestra menu - Loop principal
     do {
-        console.clear();
         console.log(`¡Hola, ${username}!\n`);
         mainMenu();
         menu = Number(prompt());
