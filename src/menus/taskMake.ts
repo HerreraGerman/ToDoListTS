@@ -4,17 +4,18 @@ import { makeMenu } from '../text/menus.ts';
 import * as taskMakeData from '../prompt/taskMakeData.ts';
 import * as mapas from '../task/maps.ts';
 import { isNewEmptyCheck, rangeCheck } from './check.ts';
+import type { Task } from '../text/taskType.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function taskMake(editTask: any) {
+export function taskMake(editTask: Task | null | false): Task | null {
     let loop: boolean = true;
-    let check: string | boolean = true;
     let menu: number  = 0;
-    let newTask: any = null;
+    let newTask: Task;
     let newFlag: boolean;
+    
     if(!editTask) {
         newTask = new task();
         newFlag = true;
@@ -41,19 +42,15 @@ export function taskMake(editTask: any) {
             case 3: // Estado
                 console.clear();    
                 newTask.status = (taskMakeData.taskMakeNumber('el estado', newTask.titulo + 
-                    '\n[1] Pendiente\n[2] En curso\n[3] Terminada\n[4] Cancelada'));
-                if (!rangeCheck(newTask.status, 4)) {
-                    newTask.status = 1
-                };
+                    '\n[1] Pendiente\n[2] En curso\n[3] Terminada\n[4] Cancelada')) ?? 1;
+                if (!rangeCheck(newTask.status, 4)) newTask.status = 1;
                 newTask.ultimaEdicion = taskMakeData.lastEditDate();
                 break;
             case 4: // Dificultad
                 console.clear();    
                 newTask.dificultad = (taskMakeData.taskMakeNumber('la dificultad', newTask.titulo + 
-                    '\n[1] Facil\n[2] Normal\n[3] Dificil'));
-                if (!rangeCheck(newTask.dificultad, 3)) {
-                    newTask.dificultad = 1
-                };
+                    '\n[1] Facil\n[2] Normal\n[3] Dificil')) ?? 1;
+                if (!rangeCheck(newTask.dificultad, 3)) newTask.dificultad = 1;
                 newTask.ultimaEdicion = taskMakeData.lastEditDate();
                 break;
             case 5: // Vencimiento
@@ -63,7 +60,7 @@ export function taskMake(editTask: any) {
                 break;
             case 0: // Guardar Tarea
                 console.clear();
-                check = isNewEmptyCheck(newTask);
+                const check = isNewEmptyCheck(newTask);
                 if (!check) {
                     loop = false;
                     return newTask;
@@ -74,7 +71,7 @@ export function taskMake(editTask: any) {
             case -1:
                 console.clear();
                 loop = false;
-                return false;
+                return null;
             default:
                 console.clear();
                 warningText(menu);
@@ -82,4 +79,6 @@ export function taskMake(editTask: any) {
         }
         menu = 6;
     } while (loop);
+
+    return null;
 }

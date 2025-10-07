@@ -2,6 +2,7 @@
 import { warningText } from './text/warning.ts';
 import { mainMenu, viewMenu } from './text/menus.ts';
 import { taskMake } from './menus/taskMake.ts';
+import type { Task } from './text/taskType.ts';
 import { searchTask } from './menus/search.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -12,13 +13,13 @@ const prompt = require('prompt-sync')();
 function main() {
     let menu: number = 0;
     let loop: boolean = true;
-    let newTask: string | null = null;
-    const taskList: string[] = [];
+    let newTask: Task | null = null;
+    const taskList: Task[] = [];
 
     // Pregunta nombre de usuario
     console.clear();
     console.log("¿Cual es tu nombre?\n")
-    let username: string = prompt();
+    let username: string = prompt() || '';
     username.slice(0, 30);
     console.clear();
 
@@ -46,12 +47,12 @@ function main() {
             case 2:
                 // Buscar tarea
                 console.clear();
-                if (taskList.length == 0) {
+                if (taskList.length === 0) {
                     console.log("Tu lista de tareas se encuentra vacia!");
-                }
-                else {
+                } else {
                     console.log("Ingrese el titulo de la tarea a buscar:");
-                    newTask = searchTask(taskList, prompt())
+                    const busqueda = prompt() || '';
+                    newTask = searchTask(taskList, busqueda)
                     if (newTask) {
                         taskMake(newTask);
                         newTask = null;
@@ -61,7 +62,7 @@ function main() {
             case 3:
                 // Agregar tarea
                 console.clear();
-                newTask = taskMake(false);
+                newTask = taskMake(null);
                 if (newTask) {
                     taskList.push(newTask);
                     newTask = null;

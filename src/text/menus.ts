@@ -41,10 +41,11 @@ export function searchMenu(taskList: Task[]) {
     taskDetail(searchTask(taskList, busqueda));
 }
 
-export function viewMenu(taskList: Task[]) {
+export function viewMenu(taskList: Task[]): Task | null {
     console.clear();
-    if (taskList.length == 0) {
+    if (taskList.length === 0) {
         console.log("Tu lista de tareas se encuentra vacia!");
+        return null;
     }
     else {
         console.log("¿Que tareas deseas ver?");
@@ -53,6 +54,8 @@ export function viewMenu(taskList: Task[]) {
         console.log("[3] Ver tareas en curso");
         console.log("[4] Ver tareas terminadas");
         console.log("[0] Volver");
-        return viewTask(taskList);
+
+        const selectedTask = viewTask(taskList);
+        return selectedTask ?? null;
     }
 }

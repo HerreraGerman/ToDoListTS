@@ -6,7 +6,7 @@ const prompt = require('prompt-sync')();
 
 export function searchTask(taskList: Task[], busqueda: string): Task | null {
     const foundList: Task[] = [];
-    const termino = busqueda.toLocaleLowerCase();
+    const termino = busqueda.toLowerCase();
 
     for (const task of taskList) {
         const titulo = task.titulo.toLowerCase();

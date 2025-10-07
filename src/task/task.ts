@@ -1,15 +1,14 @@
 import { format } from 'date-fns';
+import type { Task } from '../text/taskType.ts';
 
-let statusIndex: number = 1;
-let difficultyIndex: number = 1;
-class task {
+class task implements Task {
     titulo = "sin nombre";
     descripcion = "sin descripcion";
     status = 1;
+    dificultad = 1;
+    vencimiento = "";
     fechaCreacion = format(new Date, 'yyyy/MM/dd - hh:mm a') + ' Hora Estandar Argentina';
     ultimaEdicion = this.fechaCreacion;
-    vencimiento = null;
-    dificultad = 1;
 }
 
 export { task };
