@@ -7,7 +7,6 @@ const require = createRequire(import.meta.url);
 const prompt = require('prompt-sync')();
 
 export function viewTask(taskList: Task[]): void | ReturnType<typeof chooseEdit>{
-    let foundCount: number = 0;
     let foundList: Task[] = [];
     let filter: number = Number(prompt());
     let filterType: string = "";
