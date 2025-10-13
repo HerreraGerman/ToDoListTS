@@ -6,7 +6,7 @@ const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function taskMakeNumber(dataName: string[], extraData: string[]) {
+export function taskMakeNumber(dataName: string, extraData: string) {
     console.clear();
     console.log("Ingrese " + dataName + " de la tarea " + extraData);
     let taskData: number = Number(prompt());
@@ -17,14 +17,14 @@ export function taskMakeNumber(dataName: string[], extraData: string[]) {
     return taskData;
 }
 
-export function taskMakeString(dataName: string[], extraData: string[], limit: number) {
+export function taskMakeString(dataName: string, extraData: string, limit: number) {
     console.clear();
     console.log("Ingrese " + dataName + " de la tarea " + extraData);
     let taskData: string = prompt();
     return taskData.trimEnd();
 }
 
-export function taskSetDate(dataName: string[], extraData: string[], fechaCreacion: string[]) {
+export function taskSetDate(dataName: string, extraData: string, fechaCreacion: string) {
     console.clear();
     console.log("Ingrese " + dataName + " de la tarea " + extraData);
     let taskData = prompt();

@@ -1,6 +1,6 @@
 import { taskDetail } from './taskDetail.ts';
 import { viewTask } from '../prompt/getMenu.ts';
-import type { Task } from './taskType.ts';
+import type { ITask } from '../task/taskPrototype.ts';
 import { searchTask } from '../menus/search.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -15,7 +15,7 @@ export function mainMenu() {
     console.log("[0] Salir\n");
 }
 
-export function makeMenu(task: Task, estados: Map<number, string>, dificultades: Map<number, string>, nueva: boolean) {
+export function makeMenu(task: ITask, estados: Map<number, string>, dificultades: Map<number, string>, nueva: boolean) {
     if (nueva == true) {
         console.log("Estas creando una nueva tarea!");
     }
@@ -33,7 +33,7 @@ export function makeMenu(task: Task, estados: Map<number, string>, dificultades:
     console.log("[-1] Cancelar Tarea");
 }
 
-export function searchMenu(taskList: Task[]) {
+export function searchMenu(taskList: ITask[]) {
     console.clear();
     let busqueda: string = '';
     console.log("Introduce el titulo de una tarea para buscarla: ")
@@ -41,7 +41,7 @@ export function searchMenu(taskList: Task[]) {
     taskDetail(searchTask(taskList, busqueda));
 }
 
-export function viewMenu(taskList: Task[]): Task | null {
+export function viewMenu(taskList: ITask[]): ITask | null {
     console.clear();
     if (taskList.length === 0) {
         console.log("Tu lista de tareas se encuentra vacia!");

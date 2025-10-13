@@ -1,69 +1,73 @@
+"use strict";
 import { warningText } from '../text/warning.ts';
-import { task } from '../task/task.ts';
+import { Task } from '../task/taskPrototype.ts';
+import type { ITask } from '../task/taskPrototype.ts';
 import { makeMenu } from '../text/menus.ts';
 import * as taskMakeData from '../prompt/taskMakeData.ts';
 import * as mapas from '../task/maps.ts';
 import { isNewEmptyCheck, rangeCheck } from './check.ts';
-import type { Task } from '../text/taskType.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function taskMake(editTask: Task | null | false): Task | null {
+export function taskMake(editTask: ITask | null ): ITask | null {
     let loop: boolean = true;
     let menu: number  = 0;
-    let newTask: Task;
+    let currentTask: ITask;
     let newFlag: boolean;
     
     if(!editTask) {
-        newTask = new task();
+        currentTask = new Task();
         newFlag = true;
     } else {
-        newTask = editTask;
+        currentTask = editTask;
         newFlag = false;
     }
 
     do{
         console.clear();
-        makeMenu(newTask, mapas.estados, mapas.dificultades, newFlag);
+        makeMenu(currentTask, mapas.estados, mapas.dificultades, newFlag);
         menu = Number(prompt());
         switch (menu) {
             case 1: // Nombre
                 console.clear();   
-                newTask.titulo = taskMakeData.taskMakeString('el nombre', '(100 caracteres maximo)', 100);
-                newTask.ultimaEdicion = taskMakeData.lastEditDate();
+                currentTask.titulo = taskMakeData.taskMakeString('el nombre', '(100 caracteres maximo)', 100);
+                currentTask.updateLastEditDate();
                 break;
             case 2: // Descripcion
                 console.clear();
-                newTask.descripcion = taskMakeData.taskMakeString('una descripcion', '(500 caracteres maximo)', 500);
-                newTask.ultimaEdicion = taskMakeData.lastEditDate();
+                currentTask.descripcion = taskMakeData.taskMakeString('una descripcion', '(500 caracteres maximo)', 500);
+                currentTask.updateLastEditDate();
                 break;
             case 3: // Estado
                 console.clear();    
-                newTask.status = (taskMakeData.taskMakeNumber('el estado', newTask.titulo + 
+                currentTask.status = (taskMakeData.taskMakeNumber('el estado', currentTask.titulo + 
                     '\n[1] Pendiente\n[2] En curso\n[3] Terminada\n[4] Cancelada')) ?? 1;
-                if (!rangeCheck(newTask.status, 4)) newTask.status = 1;
-                newTask.ultimaEdicion = taskMakeData.lastEditDate();
+                if (!rangeCheck(currentTask.status, 4)) currentTask.status = 1;
+                currentTask.updateLastEditDate();
                 break;
             case 4: // Dificultad
                 console.clear();    
-                newTask.dificultad = (taskMakeData.taskMakeNumber('la dificultad', newTask.titulo + 
+                currentTask.dificultad = (taskMakeData.taskMakeNumber('la dificultad', currentTask.titulo + 
                     '\n[1] Facil\n[2] Normal\n[3] Dificil')) ?? 1;
-                if (!rangeCheck(newTask.dificultad, 3)) newTask.dificultad = 1;
-                newTask.ultimaEdicion = taskMakeData.lastEditDate();
+                if (!rangeCheck(currentTask.dificultad, 3)) currentTask.dificultad = 1;
+                currentTask.updateLastEditDate();
                 break;
             case 5: // Vencimiento
                 console.clear();
-                newTask.vencimiento = taskMakeData.taskSetDate('vencimiento', ' (yyyy-mm-dd)', newTask.fechaCreacion);
-                newTask.ultimaEdicion = taskMakeData.lastEditDate();
+                const newDate = taskMakeData.taskSetDate('vencimiento', '(yyyy-mm-dd)', currentTask.fechaCreacion);
+                if (newDate) {
+                    currentTask.vencimiento = newDate;
+                    currentTask.updateLastEditDate();
+                }
                 break;
             case 0: // Guardar Tarea
                 console.clear();
-                const check = isNewEmptyCheck(newTask);
+                const check = isNewEmptyCheck(currentTask);
                 if (!check) {
                     loop = false;
-                    return newTask;
+                    return currentTask;
                 } else {
                     warningText(check);
                 }

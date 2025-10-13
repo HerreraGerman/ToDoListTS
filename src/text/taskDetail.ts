@@ -1,28 +1,24 @@
+"use strict";
 import { estados, dificultades } from '../task/maps.ts';
-import type { Task } from './taskType.ts';
+import type { ITask } from '../task/taskPrototype.ts';
 import { taskMake } from '../menus/taskMake.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function taskDetail(task: Task | null) {
+export function taskDetail(task: ITask | null) {
     let editar = '0';
     if(task) {
-        const taskEstado = estados.get(task.status);
-        const taskDificultad = dificultades.get(task.dificultad);
-        console.log("Esta es la tarea que elegiste\n");
-        console.log(task.titulo);
-        console.log(task.descripcion);
-        console.log("Estado: " + task.status);
-        console.log("Dificultad: " + taskDificultad);
-        console.log("Vencimiento: " + task.vencimiento);
-        console.log("Fecha de Creacion: " + task.fechaCreacion);
+
+        // Metodo prototipo para mostrar los detalles
+        task.displayDetails();
 
         console.log("\nSi deseas editarla, presiona E.");
         console.log("Presiona cualquier otra tecla para continuar.");
         editar = prompt();
         if (editar.toLowerCase() == 'e') {
+            // Pasa el objeto tarea para ser editado
             taskMake(task);
         }
     }

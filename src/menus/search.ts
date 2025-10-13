@@ -1,25 +1,25 @@
-import type { Task } from '../text/taskType.ts';
+import type { ITask } from '../task/taskPrototype.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function searchTask(taskList: Task[], busqueda: string): Task | null {
-    const foundList: Task[] = [];
+export function searchTask(ITaskList: ITask[], busqueda: string): ITask | null {
+    const foundList: ITask[] = [];
     const termino = busqueda.toLowerCase();
 
-    for (const task of taskList) {
-        const titulo = task.titulo.toLowerCase();
-        const descripcion = task.descripcion.toLowerCase();
+    for (const ITask of ITaskList) {
+        const titulo = ITask.titulo.toLowerCase();
+        const descripcion = ITask.descripcion.toLowerCase();
         if (titulo.includes(termino) || descripcion.includes(termino)) {
-            foundList.push(task);
-            console.log(`[${foundList.length}] ${task.titulo} - ${task.descripcion}`);
+            foundList.push(ITask);
+            console.log(`[${foundList.length}] ${ITask.titulo} - ${ITask.descripcion}`);
         }
     }
     return chooseEdit(foundList);
 }
 
-export function chooseEdit(foundList: Task[]): Task | null {
+export function chooseEdit(foundList: ITask[]): ITask | null {
     if (foundList.length === 0) {
         console.log("No se encontraron coincidencias!");
         return null;

@@ -2,7 +2,7 @@
 import { warningText } from './text/warning.ts';
 import { mainMenu, viewMenu } from './text/menus.ts';
 import { taskMake } from './menus/taskMake.ts';
-import type { Task } from './text/taskType.ts';
+import type { ITask } from './task/taskPrototype.ts';
 import { searchTask } from './menus/search.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
@@ -13,8 +13,8 @@ const prompt = require('prompt-sync')();
 function main() {
     let menu: number = 0;
     let loop: boolean = true;
-    let newTask: Task | null = null;
-    const taskList: Task[] = [];
+    let selectedTask: ITask | null = null;
+    const taskList: ITask[] = [];
 
     // Pregunta nombre de usuario
     console.clear();
@@ -38,10 +38,10 @@ function main() {
             case 1:
                 // Ver tareas
                 console.clear();
-                newTask = viewMenu(taskList);
-                if (newTask) {
-                    taskMake(newTask);
-                    newTask = null;
+                selectedTask = viewMenu(taskList);
+                if (selectedTask) {
+                    taskMake(selectedTask);
+                    selectedTask = null;
                 }
                 break;
             case 2:
@@ -52,20 +52,20 @@ function main() {
                 } else {
                     console.log("Ingrese el titulo de la tarea a buscar:");
                     const busqueda = prompt() || '';
-                    newTask = searchTask(taskList, busqueda)
-                    if (newTask) {
-                        taskMake(newTask);
-                        newTask = null;
+                    selectedTask = searchTask(taskList, busqueda)
+                    if (selectedTask) {
+                        taskMake(selectedTask);
+                        selectedTask = null;
                     }
                 }
                 break;
             case 3:
                 // Agregar tarea
                 console.clear();
-                newTask = taskMake(null);
-                if (newTask) {
-                    taskList.push(newTask);
-                    newTask = null;
+                selectedTask = taskMake(null);
+                if (selectedTask) {
+                    taskList.push(selectedTask);
+                    selectedTask = null;
                 } else {
                     console.log("Se ha cancelado la tarea");
                 }

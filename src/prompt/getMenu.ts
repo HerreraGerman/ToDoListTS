@@ -1,13 +1,13 @@
 import { warningText } from '../text/warning.ts';
 import { chooseEdit } from '../menus/search.ts';
-import type { Task } from '../text/taskType.ts';
+import type { ITask } from '../task/taskPrototype.ts';
 import { createRequire } from 'module';
 const require = createRequire(import.meta.url);
 
 const prompt = require('prompt-sync')();
 
-export function viewTask(taskList: Task[]): void | ReturnType<typeof chooseEdit>{
-    let foundList: Task[] = [];
+export function viewTask(taskList: ITask[]): void | ReturnType<typeof chooseEdit>{
+    let foundList: ITask[] = [];
     let filter: number = Number(prompt());
     let filterType: string = "";
     console.clear();

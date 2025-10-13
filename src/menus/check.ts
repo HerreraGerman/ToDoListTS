@@ -1,7 +1,7 @@
 import * as dates from 'date-fns';
-import type { Task } from '../text/taskType.ts';
+import type { ITask } from '../task/taskPrototype.ts';
 
-export function isNewEmptyCheck(newTask: Task) {
+export function isNewEmptyCheck(newTask: ITask) {
     if(newTask.titulo == "sin nombre" || newTask.titulo == "" || newTask.titulo == undefined || newTask.titulo == null)
         {
             return 'titulo';
