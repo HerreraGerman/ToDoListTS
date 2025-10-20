@@ -40,14 +40,14 @@
 - Fundamentación: Se simplifico considerablemente el resto del programa. Los otros archivos ya no necesitan conocer la lógica interna de una Tarea.
 - Ejemplos:
    - Antes (en taskDetail.ts): Para mostrar el estado, se debia importar estados y hacer const taskEstado = estados.get(task.status);. El archivo taskDetail tenía que saber que status era un number y que necesitaba un Map para traducirlo.
-   - Ahora (en taskDetail.ts): Simplemente llamas a task.displayDetails(), y si quisieras solo el estado, llamarías a task.getStatusString(). El archivo taskDetail ya no sabe (ni le importa) si el estado se guarda como un número, un string o si se busca en un Map o un switch. La complejidad está abstraída dentro del método del prototipo.
+   - Ahora (en taskDetail.ts): Simplemente se llamaba a task.displayDetails(), y si se quisiera solo el estado, se llamaria a task.getStatusString(). El archivo taskDetail ya no sabe (ni le importa) si el estado se guarda como un número, un string o si se busca en un Map o un switch. La complejidad está abstraída dentro del método del prototipo.
 
 3. Herencia (Específicamente: Herencia Prototípica)
 - ¿Qué es? Es la capacidad de crear nuevos objetos que "heredan" propiedades y métodos de un objeto "padre" o prototipo. Esto promueve la reutilización de código.
 - Fundamentación: Se usa el mecanismo de herencia nativo de JavaScript: los prototipos. No se usa la sintaxis de class (que es solo una capa por encima de esto), sino la función constructora y su .prototype.
 - Ejemplos:
    - El Prototipo: El objeto Task.prototype es el "molde" que contiene todos los métodos compartidos (getStatusString, displayDetails, etc.).
-   - La Instancia: Cuando en taskMake.ts se ejecuta currentTask = new Task();, estás creando un nuevo objeto.
+   - La Instancia: Cuando en taskMake.ts se ejecuta currentTask = new Task();, se esta creando un nuevo objeto.
    - La Herencia: Este nuevo objeto currentTask tiene sus propias propiedades de datos (su propio titulo, status, etc.), pero comparte los métodos del prototipo. Si se crean 1000 tareas, solo hay una copia de la función displayDetails en memoria, y las 1000 tareas la heredan y la usan.
 
 **Caracteristicas de OOP NO utilizadas**
@@ -55,4 +55,4 @@
 - ¿Qué es? Es la capacidad de que diferentes objetos respondan al mismo mensaje (la misma llamada a un método) de diferentes maneras. Por ejemplo, si tuvieras objetos Perro y Gato, ambos podrían tener un método hacerSonido(), pero uno ladraría y el otro maullaría.
 - ¿Por qué no se uso? Porque en el proyecto, solo existe un tipo de objeto: ITask.
 - Justificación: No se tiene variaciones de Tareas. Todas las tareas se comportan exactamente igual.
-- El polimorfismo es una herramienta poderosa para cuando tu sistema crece y necesitas manejar diferentes "formas" de un mismo concepto. Para esta lista de tareas, no era necesario y habría añadido complejidad innecesaria.
+- El polimorfismo es una herramienta poderosa para cuando un sistema crece y necesita manejar diferentes "formas" de un mismo concepto. Para esta lista de tareas, no era necesario y habría añadido complejidad innecesaria.
