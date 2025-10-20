@@ -1,8 +1,7 @@
 import type { ITask } from '../task/taskPrototype.ts';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import promptSync from 'prompt-sync';
 
-const prompt = require('prompt-sync')();
+const prompt = promptSync();
 
 export function searchTask(ITaskList: ITask[], busqueda: string): ITask | null {
     const foundList: ITask[] = [];
@@ -28,7 +27,7 @@ export function chooseEdit(foundList: ITask[]): ITask | null {
     console.log("\n¿Deseas ver los detalles de alguna tarea?");
     console.log("Introduce el numero para ver una tarea o 0 para volver.\n");
 
-    const input = prompt();
+    const input = prompt(">");
     const i: number = Number(input);
     if (isNaN(i) || i === 0 || i > foundList.length) {
             console.clear();

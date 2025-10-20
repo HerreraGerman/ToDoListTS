@@ -6,10 +6,9 @@ import { makeMenu } from '../text/menus.ts';
 import * as taskMakeData from '../prompt/taskMakeData.ts';
 import * as mapas from '../task/maps.ts';
 import { isNewEmptyCheck, rangeCheck } from './check.ts';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import promptSync from 'prompt-sync';
 
-const prompt = require('prompt-sync')();
+const prompt = promptSync();
 
 export function taskMake(editTask: ITask | null ): ITask | null {
     let loop: boolean = true;
@@ -28,7 +27,7 @@ export function taskMake(editTask: ITask | null ): ITask | null {
     do{
         console.clear();
         makeMenu(currentTask, mapas.estados, mapas.dificultades, newFlag);
-        menu = Number(prompt());
+        menu = Number(prompt(">"));
         switch (menu) {
             case 1: // Nombre
                 console.clear();   

@@ -2,10 +2,9 @@ import { taskDetail } from './taskDetail.ts';
 import { viewTask } from '../prompt/getMenu.ts';
 import type { ITask } from '../task/taskPrototype.ts';
 import { searchTask } from '../menus/search.ts';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import promptSync from 'prompt-sync';
 
-const prompt = require('prompt-sync')();
+const prompt = promptSync();
 
 export function mainMenu() {
     console.log("¿Que desea hacer?");
@@ -37,7 +36,7 @@ export function searchMenu(taskList: ITask[]) {
     console.clear();
     let busqueda: string = '';
     console.log("Introduce el titulo de una tarea para buscarla: ")
-    busqueda = prompt() || '';
+    busqueda = prompt(">") || '';
     taskDetail(searchTask(taskList, busqueda));
 }
 

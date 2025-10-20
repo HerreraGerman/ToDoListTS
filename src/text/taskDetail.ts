@@ -1,11 +1,9 @@
 "use strict";
-import { estados, dificultades } from '../task/maps.ts';
 import type { ITask } from '../task/taskPrototype.ts';
 import { taskMake } from '../menus/taskMake.ts';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import promptSync from 'prompt-sync';
 
-const prompt = require('prompt-sync')();
+const prompt = promptSync();
 
 export function taskDetail(task: ITask | null) {
     let editar = '0';
@@ -16,7 +14,7 @@ export function taskDetail(task: ITask | null) {
 
         console.log("\nSi deseas editarla, presiona E.");
         console.log("Presiona cualquier otra tecla para continuar.");
-        editar = prompt();
+        editar = prompt(">");
         if (editar.toLowerCase() == 'e') {
             // Pasa el objeto tarea para ser editado
             taskMake(task);

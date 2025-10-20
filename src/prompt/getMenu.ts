@@ -1,14 +1,13 @@
 import { warningText } from '../text/warning.ts';
 import { chooseEdit } from '../menus/search.ts';
 import type { ITask } from '../task/taskPrototype.ts';
-import { createRequire } from 'module';
-const require = createRequire(import.meta.url);
+import promptSync from 'prompt-sync';
 
-const prompt = require('prompt-sync')();
+const prompt = promptSync();
 
 export function viewTask(taskList: ITask[]): void | ReturnType<typeof chooseEdit>{
     let foundList: ITask[] = [];
-    let filter: number = Number(prompt());
+    let filter: number = Number(prompt(">"));
     let filterType: string = "";
     console.clear();
     switch (filter) {
